@@ -12,6 +12,10 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         email: {
+            type: DataTypes.STRING,
+            unique:true
+        },
+        defaultEmail:{
             type: DataTypes.STRING
         },
         role: {
