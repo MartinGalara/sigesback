@@ -79,7 +79,7 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
     try {
 
-        const { username, role } = req.body;
+        const { username, role , password} = req.body;
 
         const webUser = await Webuser.findOne({
             where:{
@@ -87,10 +87,20 @@ router.put('/', async (req, res) => {
             }
         })
 
-        await webUser.update({
-            role: role,
-            active: true
-        })
+        if(role){
+            await webUser.update({
+                role: role,
+                active: true
+            })
+        }
+        else if(password){
+
+            const hashPassword = await bcrypt.hash(password, 10);
+
+            await webUser.update({
+                hashPassword
+            })
+        }
 
         return res.status(200).json(webUser)
         
