@@ -60,7 +60,8 @@ router.post('/', async (req, res) => {
         const webUser = await Webuser.create({
           username,
           hashPassword,
-          userId
+          userId,
+          defaultEmail: email
         });
 
         await sendEmailWebUser(email,username)
