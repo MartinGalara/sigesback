@@ -97,4 +97,37 @@ const sendEmailWebUser = async (email,username) => {
 
 }
 
-module.exports = {createUser, createWebUser, sendEmailWebUser}
+const resetPasswordEmail = async (data) => {
+
+    let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: process.env.SENDER, // generated ethereal user
+          pass: process.env.GMAIL_PASS, // generated ethereal password
+        },
+      });
+
+      let data = {
+        from: process.env.SENDER, // sender address
+        to: data.email, // list of receivers
+        subject: `Recuperar contraseña de: ${data.username}`, // Subject line
+        text: `Recuperar contraseña de: ${data.username}`, // plain text body
+      }
+
+      data.html = `
+    <div>
+    <p>Recuperacion de contraseña - Web Sistema SIGES</p>
+    <p>Usuario: ${data.username}</p>
+    <br></br>
+    <p>Para recuperar su clave ingrese a: https://sigesfront.vercel.app/newpassword?username=${data.username}</p>
+    </div>
+    ` // html body
+
+    const mail = await transporter.sendMail(data);
+
+}
+
+
+module.exports = {createUser, createWebUser, sendEmailWebUser, resetPasswordEmail}

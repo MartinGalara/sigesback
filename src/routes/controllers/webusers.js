@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { Webuser } = require('../../db.js')
 const bcrypt = require('bcrypt');
-const { sendEmailWebUser } = require('./utils.js')
+const { sendEmailWebUser, resetPasswordEmail } = require('./utils.js')
 //const userExtractor = require('../middleware/userExtractor.js.js');
 
 const router = Router();
@@ -31,6 +31,8 @@ router.get('/', async (req, res) => {
             const userData = {username: webUser.username}
 
             webUser.email ? userData.email = webUser.email : userData.email = webUser.defaultEmail;
+
+            await resetPasswordEmail(userData)
 
             return res.status(200).json(userData)
         }
