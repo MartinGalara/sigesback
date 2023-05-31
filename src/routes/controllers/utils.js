@@ -67,7 +67,7 @@ const createWebUser = async (data) => {
 
 const sendEmailWebUser = async (email,username) => {
 
-    const transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
         secure: true, // true for 465, false for other ports
@@ -77,7 +77,7 @@ const sendEmailWebUser = async (email,username) => {
         },
       });
 
-      const data = {
+      let data = {
         from: process.env.SENDER, // sender address
         to: email, // list of receivers
         subject: `Alta de nuevo usuario: ${username}`, // Subject line
@@ -97,7 +97,7 @@ const sendEmailWebUser = async (email,username) => {
 
 }
 
-const resetPasswordEmail = async (data) => {
+/* const resetPasswordEmail = async (data) => {
 
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -127,7 +127,7 @@ const resetPasswordEmail = async (data) => {
 
     const mail = await transporter.sendMail(data);
 
-}
+} */
 
 
 module.exports = {createUser, createWebUser, sendEmailWebUser, resetPasswordEmail}
