@@ -97,9 +97,9 @@ const sendEmailWebUser = async (email,username) => {
 
 }
 
-/* const resetPasswordEmail = async (data) => {
+const resetPasswordEmail = async (info) => {
 
-    const transporter = nodemailer.createTransport({
+    let transporter2 = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
         secure: true, // true for 465, false for other ports
@@ -109,25 +109,25 @@ const sendEmailWebUser = async (email,username) => {
         },
       });
 
-      const data = {
+      let data2 = {
         from: process.env.SENDER, // sender address
-        to: data.email, // list of receivers
-        subject: `Recuperar contraseña de: ${data.username}`, // Subject line
-        text: `Recuperar contraseña de: ${data.username}`, // plain text body
+        to: info.email, // list of receivers
+        subject: `Recuperar contraseña de: ${info.username}`, // Subject line
+        text: `Recuperar contraseña de: ${info.username}`, // plain text body
       }
 
-      data.html = `
+      data2.html = `
     <div>
     <p>Recuperacion de contraseña - Web Sistema SIGES</p>
-    <p>Usuario: ${data.username}</p>
+    <p>Usuario: ${info.username}</p>
     <br></br>
-    <p>Para recuperar su clave ingrese a: https://sigesfront.vercel.app/newpassword?username=${data.username}</p>
+    <p>Para recuperar su clave ingrese a: https://sigesfront.vercel.app/newpassword?username=${info.username}</p>
     </div>
     ` // html body
 
-    const mail = await transporter.sendMail(data);
+    const mail = await transporter2.sendMail(data2);
 
-} */
+}
 
 
 module.exports = {createUser, createWebUser, sendEmailWebUser, resetPasswordEmail}
