@@ -89,7 +89,7 @@ const sendEmailWebUser = async (email,username) => {
     <p>Alta de nuevo usuario - Web Sistema SIGES</p>
     <p>Nuevo usuario: ${username}</p>
     <br></br>
-    <p>Para activarlo ingrese a: https://siges.vercel.app//newuser?username=${username}</p>
+    <p>Para activarlo ingrese a: https://sigesfront.vercel.app/newuser?username=${username}</p>
     </div>
     ` // html body
 
