@@ -53,20 +53,20 @@ router.post('/', async (req, res) => {
 
     try {
 
-        const { email, username, password, userId } = req.body;
+        const { email, defaultEmail, password, userId } = req.body;
     
         // Realizar el hash de la contraseña utilizando algún algoritmo de hash, como bcrypt
         const hashPassword = await bcrypt.hash(password, 10);
     
         // Crear la nueva entrada en la base de datos
         const webUser = await Webuser.create({
-          username,
           hashPassword,
           userId,
-          defaultEmail: email
+          defaultEmail,
+          email
         });
 
-        await sendEmailWebUser(email,username)
+        await sendEmailWebUser(defaultEmail,email)
     
         return res.status(201).json(webUser);
       } catch (error) {
@@ -79,11 +79,11 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
     try {
 
-        const { username, role , password} = req.body;
+        const { email, role , password} = req.body;
 
         const webUser = await Webuser.findOne({
             where:{
-                username: username
+                email: email
             }
         })
 

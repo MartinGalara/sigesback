@@ -65,7 +65,7 @@ const createWebUser = async (data) => {
 
 }
 
-const sendEmailWebUser = async (email,username) => {
+const sendEmailWebUser = async (defaultEmail,email) => {
 
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -79,21 +79,21 @@ const sendEmailWebUser = async (email,username) => {
 
       let data = {
         from: process.env.SENDER, // sender address
-        to: email, // list of receivers
-        subject: `Alta de nuevo usuario: ${username}`, // Subject line
-        text: `Alta de nuevo usuario: ${username}`, // plain text body
+        to: defaultEmail, // list of receivers
+        subject: `Alta de nuevo usuario: ${email}`, // Subject line
+        text: `Alta de nuevo usuario: ${email}`, // plain text body
       }
 
       data.html = `
     <div>
     <p>Alta de nuevo usuario - Web Sistema SIGES</p>
-    <p>Nuevo usuario: ${username}</p>
+    <p>Nuevo usuario: ${email}</p>
     <br></br>
-    <p>Para activarlo ingrese a: https://sigesfront.vercel.app/newuser?username=${username}</p>
+    <p>Para activarlo ingrese a: https://sigesfront.vercel.app/newuser?email=${email}</p>
     </div>
     ` // html body
 
-    const mail = await transporter.sendMail(data);
+    await transporter.sendMail(data);
 
 }
 

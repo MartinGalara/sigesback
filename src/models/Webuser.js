@@ -2,11 +2,6 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     sequelize.define('webuser', {
-        username: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
-        },
         hashPassword: {
             type: DataTypes.STRING,
             allowNull: false
