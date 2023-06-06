@@ -112,20 +112,20 @@ const resetPasswordEmail = async (info) => {
       let data2 = {
         from: process.env.SENDER, // sender address
         to: info.email, // list of receivers
-        subject: `Recuperar contraseña de: ${info.username}`, // Subject line
-        text: `Recuperar contraseña de: ${info.username}`, // plain text body
+        subject: `Recuperar contraseña de: ${info.email}`, // Subject line
+        text: `Recuperar contraseña de: ${info.email}`, // plain text body
       }
 
       data2.html = `
     <div>
     <p>Recuperacion de contraseña - Web Sistema SIGES</p>
-    <p>Usuario: ${info.username}</p>
+    <p>Email: ${info.email}</p>
     <br></br>
-    <p>Para recuperar su clave ingrese a: https://sigesfront.vercel.app/newpassword?username=${info.username}</p>
+    <p>Para recuperar su clave ingrese a: https://sigesfront.vercel.app/newpassword?email=${info.email}</p>
     </div>
     ` // html body
 
-    const mail = await transporter2.sendMail(data2);
+    await transporter2.sendMail(data2);
 
 }
 
