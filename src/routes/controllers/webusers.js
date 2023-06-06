@@ -9,7 +9,7 @@ const router = Router();
 router.get('/', async (req, res) => {
     try {
 
-        const { userId, username, reset} = req.query;
+        const { userId, email, reset} = req.query;
 
         if(userId){
             const webUsers = await Webuser.findAll({
@@ -21,20 +21,16 @@ router.get('/', async (req, res) => {
             return res.status(200).json(webUsers)
         }
 
-        if(username && reset){
+        if(email && reset){
             const webUser = await Webuser.findOne({
                 where:{
-                    username: username
+                    email: email
                 }
             })
 
-            const userData = {username: webUser.username}
+            await resetPasswordEmail(webUser)
 
-            webUser.email ? userData.email = webUser.email : userData.email = webUser.defaultEmail;
-
-            await resetPasswordEmail(userData)
-
-            return res.status(200).json(userData)
+            return res.status(200).json(webUser)
         }
 
         const allWebUsers = await Webuser.findAll()
