@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { Webuser } = require('../../db.js')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const userExtractor = require('../middleware/userExtractor.js')
 
 const router = Router();
 
