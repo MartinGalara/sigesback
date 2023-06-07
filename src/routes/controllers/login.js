@@ -37,7 +37,10 @@ router.post('/', async (req, res) => {
 
     return res.status(200).send({
         token,
-        role: webuser.role
+        role: webuser.role,
+        active: webuser.active,
+        email: webuser.email,
+        userId: webuser.userId
     })
 
     } else {
