@@ -8,9 +8,7 @@ const router = Router();
 
 router.get('/', userExtractor, async (req,res) => {
 
-    console.log(req.body)
-
-    return res.status(200).json({id: req.body.id, role: req.body.role})
+    return res.status(200).json(req.body)
  
  })
 
