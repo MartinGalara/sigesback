@@ -5,6 +5,14 @@ const jwt = require('jsonwebtoken')
 
 const router = Router();
 
+router.get('/', userExtractor, async (req,res) => {
+
+    console.log(req.body)
+
+    return res.status(200).json({id: req.body.id, role: req.body.role})
+ 
+ })
+
 router.post('/', async (req, res) => {
     try {
     const { email, password } = req.body;
