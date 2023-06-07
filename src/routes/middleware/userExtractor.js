@@ -27,6 +27,7 @@ module.exports = (req , res , next) => {
     req.body.active = active
     req.body.userId = userId
     req.body.email = email
+    req.body.token = token
 
     next()
 
