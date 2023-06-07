@@ -92,7 +92,7 @@ router.put('/', async (req, res) => {
         else if(password){
 
             const hashPassword = await bcrypt.hash(password, 10);
-
+                
             await webUser.update({
                 hashPassword
             })

@@ -1,6 +1,7 @@
 const { Router } = require('express');
-const { Operator } = require('../../db.js')
+const { Webuser } = require('../../db.js')
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 const router = Router();
 
@@ -9,19 +10,36 @@ router.post('/', async (req, res) => {
     const { email, password } = req.body;
   
     // Buscar el operador por el correo electrónico
-    const operator = await Operator.findOne({ where: { email } });
+    const webuser = await Webuser.findOne({ where: { email } });
   
     // Verificar si el operador existe
-    if (!operator) {
+    if (!webuser) {
      return res.status(401).json({ message: 'Credenciales inválidas' });
     }
   
     // Comparar las contraseñas hasheadas
-    const passwordMatch = await bcrypt.compare(password, operator.hashPassword);
+    const passwordMatch = await bcrypt.compare(password, webuser.hashPassword);
   
     if (passwordMatch) {
     // Contraseña coincidente, el inicio de sesión es exitoso
-    res.status(200).json({ message: 'Inicio de sesión exitoso' });
+    
+    const userForToken = {
+        id: webuser.id,
+        role: webuser.role,
+        active: webuser.active,
+        email: webuser.email,
+        userId: webuser.userId
+    }
+
+    console.log(userForToken)
+
+    const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 60 * 60 * 24 * 7})
+
+    return res.status(200).send({
+        token,
+        role: webuser.role
+    })
+
     } else {
     // Contraseña incorrecta, el inicio de sesión falla
     res.status(401).json({ message: 'Credenciales inválidas' });
