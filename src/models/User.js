@@ -22,6 +22,9 @@ module.exports = (sequelize) => {
         },
         vipmail: {
             type: DataTypes.STRING,
+        },
+        testing:{
+            type: DataTypes.BOOLEAN,
         }
     },
         {
