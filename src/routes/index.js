@@ -10,6 +10,7 @@ const staffs = require("./controllers/staffs.js")
 const operators = require("./controllers/operators.js")
 const login = require("./controllers/login.js")
 const webusers = require("./controllers/webusers.js")
+const recommendations = require("./controllers/recommendations.js")
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -25,5 +26,6 @@ router.use('/staffs', staffs)
 router.use('/operators', operators)
 router.use('/login', login)
 router.use('/webusers', webusers)
+router.use('/recommendations', recommendations)
 
 module.exports = router;
