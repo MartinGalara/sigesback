@@ -5,6 +5,16 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   try {
+    const { id } = req.query;
+
+    if (id) {
+      const recommendation = await Recommendation.findByPk(id);
+      if (!recommendation) {
+        return res.status(404).json({ error: 'Recommendation not found' });
+      }
+      return res.json(recommendation);
+    }
+
     const recommendations = await Recommendation.findAll();
     res.json(recommendations);
   } catch (error) {
