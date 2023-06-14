@@ -1,26 +1,24 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    sequelize.define('recommendation', {
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false
-          },
-          text: {
-            type: DataTypes.STRING,
-            allowNull: false
-          },
-          image: {
-            type: DataTypes.STRING,
-            allowNull: true
-          },
-          flags: {
-            type: DataTypes.ARRAY(DataTypes.STRING),
-            allowNull: true
-          }
+  sequelize.define('recommendation', {
+    title: {
+      type: DataTypes.TEXT, // Sin límite de caracteres
+      allowNull: false
     },
-        {
-            timestamps: false,
-        }
-    )
-}
+    text: {
+      type: DataTypes.TEXT, // Sin límite de caracteres
+      allowNull: false
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    flags: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true
+    }
+  }, {
+    timestamps: false
+  });
+};
