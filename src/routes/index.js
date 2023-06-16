@@ -11,6 +11,7 @@ const operators = require("./controllers/operators.js")
 const login = require("./controllers/login.js")
 const webusers = require("./controllers/webusers.js")
 const recommendations = require("./controllers/recommendations.js")
+const cloudinary = require("./controllers/cloudinary.js")
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -27,5 +28,6 @@ router.use('/operators', operators)
 router.use('/login', login)
 router.use('/webusers', webusers)
 router.use('/recommendations', recommendations)
+router.use('/cloudinary', cloudinary)
 
 module.exports = router;
