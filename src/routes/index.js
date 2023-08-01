@@ -12,7 +12,7 @@ const login = require("./controllers/login.js")
 const webusers = require("./controllers/webusers.js")
 const recommendations = require("./controllers/recommendations.js")
 const cloudinary = require("./controllers/cloudinary.js")
-//const vipusers = require("./controllers/vipusers.js")
+const vipusers = require("./controllers/vipusers.js")
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -30,6 +30,6 @@ router.use('/login', login)
 router.use('/webusers', webusers)
 router.use('/recommendations', recommendations)
 router.use('/cloudinary', cloudinary)
-//router.use('/vipusers', vipusers)
+router.use('/vipusers', vipusers)
 
 module.exports = router;
