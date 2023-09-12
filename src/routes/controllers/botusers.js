@@ -32,36 +32,60 @@ router.post('/', async (req, res) => {
         // Obtener los datos del cuerpo de la solicitud
         const { name, phone, email, createUser, canSOS, adminPdf, manager, area, userId, createdBy } = req.body;
 
-        // Crear un nuevo usuario en la tabla Botuser
-        const newUser = await Botuser.create({
-            name,
-            phone,
-            email,
-            createUser,
-            canSOS,
-            adminPdf,
-            manager,
-            area,
-            createdBy
+        // Verificar si existe un Botuser con el mismo número de teléfono
+        const existingBotuser = await Botuser.findOne({
+            where: {
+                phone: phone
+            }
         });
 
-        // Buscar al usuario existente por su ID
-        const user = await User.findByPk(userId);
+        if (existingBotuser) {
+            // Si existe un Botuser con el mismo número de teléfono, verificamos la relación con el userId
+            const existingRelation = await existingBotuser.hasUser(userId);
 
-        if (!user) {
-            return res.status(404).json({ error: 'El usuario especificado no existe' });
+            if (!existingRelation) {
+                // Si no existe una relación con el userId proporcionado, verificamos si el userId proporcionado existe
+                const user = await User.findByPk(userId);
+
+                if (!user) {
+                    return res.status(404).json({ error: 'El usuario especificado no existe' });
+                }
+
+                // Establecer la relación entre el Botuser existente y el nuevo User
+                await existingBotuser.addUser(user);
+            }
+
+            return res.status(200).json(existingBotuser);
+        } else {
+            // Si no existe un Botuser con el mismo número de teléfono, creamos uno nuevo
+            const newUser = await Botuser.create({
+                name,
+                phone,
+                email,
+                createUser,
+                canSOS,
+                adminPdf,
+                manager,
+                area,
+                createdBy
+            });
+
+            // Verificamos si el userId proporcionado existe y establecemos la relación
+            const user = await User.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).json({ error: 'El usuario especificado no existe' });
+            }
+
+            // Establecer la relación entre el nuevo Botuser y el User existente
+            await newUser.addUser(user);
         }
 
-        // Establecer la relación entre el nuevo Botuser y el User existente
-        await newUser.addUser(user);
-
-        // Devolver una respuesta exitosa con el nuevo usuario creado
         return res.status(201).json(newUser);
     } catch (error) {
         // Manejar errores y devolver una respuesta de error
         return res.status(400).json({ error: error.message });
     }
 });
-
 
 module.exports = router;
