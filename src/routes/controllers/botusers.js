@@ -32,14 +32,7 @@ router.post('/', async (req, res) => {
         // Obtener los datos del cuerpo de la solicitud
         const { name, phone, email, createUser, canSOS, adminPdf, manager, area, userId, createdBy } = req.body;
 
-        // Verificar si el usuario con userId proporcionado existe
-        const user = await User.findByPk(userId);
-
-        if (!user) {
-            return res.status(404).json({ error: 'El usuario especificado no existe' });
-        }
-
-        // Crear un nuevo usuario en la tabla Botuser y establecer la relación con el userId proporcionado
+        // Crear un nuevo usuario en la tabla Botuser
         const newUser = await Botuser.create({
             name,
             phone,
@@ -52,8 +45,15 @@ router.post('/', async (req, res) => {
             createdBy
         });
 
-        // Asociar el nuevo Botuser al User existente
-        await newUser.setUser(user);
+        // Buscar al usuario existente por su ID
+        const user = await User.findByPk(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: 'El usuario especificado no existe' });
+        }
+
+        // Establecer la relación entre el nuevo Botuser y el User existente
+        await newUser.addUser(user);
 
         // Devolver una respuesta exitosa con el nuevo usuario creado
         return res.status(201).json(newUser);
@@ -62,5 +62,6 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ error: error.message });
     }
 });
+
 
 module.exports = router;
