@@ -31,6 +31,9 @@ module.exports = (sequelize) => {
         email: {
             type: DataTypes.STRING,
         },
+        createdBy: {
+            type: DataTypes.STRING,
+        },
     }, {
         timestamps: false,
     });

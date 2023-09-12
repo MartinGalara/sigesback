@@ -77,8 +77,8 @@ Webuser.belongsTo(User)
 User.hasMany(Vipuser);
 Vipuser.belongsTo(User)
 
-User.hasMany(Botuser);
-Botuser.belongsTo(User)
+User.belongsToMany(Botuser, { through: 'User_Botuser' });
+Botuser.belongsToMany(User, { through: 'User_Botuser' });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
