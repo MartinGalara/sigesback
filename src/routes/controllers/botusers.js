@@ -79,9 +79,10 @@ router.post('/', async (req, res) => {
 
             // Establecer la relación entre el nuevo Botuser y el User existente
             await newUser.addUser(user);
+
+            return res.status(201).json(newUser);
         }
 
-        return res.status(201).json(newUser);
     } catch (error) {
         // Manejar errores y devolver una respuesta de error
         return res.status(400).json({ error: error.message });
