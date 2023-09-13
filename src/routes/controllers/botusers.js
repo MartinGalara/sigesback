@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
         const { name, phone, email, createUser, canSOS, adminPdf, manager, area, userId, createdBy } = req.body;
 
         // Verificar si existe un Botuser con el mismo número de teléfono
-        const existingBotuser = await Client.findOne({
+        const existingBotuser = await Botuser.findOne({
             where: {
                 phone: phone
             }
