@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
             defaultValue: false
         },
         area: {
-            type: DataTypes.ENUM('P', 'A', 'B', 'T'),
+            type: DataTypes.ENUM('P', 'A', 'B', 'T', 'G'),
         },
         email: {
             type: DataTypes.STRING,
