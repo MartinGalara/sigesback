@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Botuser, User } = require('../../db.js')
+const { Botuser, Client } = require('../../db.js')
 
 const router = Router();
 
@@ -11,14 +11,14 @@ router.get('/', async (req, res) => {
                 where: {
                     phone: phone
                 },
-                include: [User] // Esto realiza un join con la tabla User
+                include: [Client] // Esto realiza un join con la tabla User
             });
             return res.status(200).json(botUsers);
         }
         
         // Si no se proporciona un número de teléfono, obtén todos los Botuser con sus usuarios relacionados.
         const allBotUsers = await Botuser.findAll({
-            include: [User] // Esto realiza un join con la tabla User
+            include: [Client] // Esto realiza un join con la tabla User
         });
         
         return res.status(200).json(allBotUsers);
@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
         const { name, phone, email, createUser, canSOS, adminPdf, manager, area, userId, createdBy } = req.body;
 
         // Verificar si existe un Botuser con el mismo número de teléfono
-        const existingBotuser = await Botuser.findOne({
+        const existingBotuser = await Client.findOne({
             where: {
                 phone: phone
             }
@@ -41,18 +41,18 @@ router.post('/', async (req, res) => {
 
         if (existingBotuser) {
             // Si existe un Botuser con el mismo número de teléfono, verificamos la relación con el userId
-            const existingRelation = await existingBotuser.hasUser(userId);
+            const existingRelation = await existingBotuser.hasClient(userId);
 
             if (!existingRelation) {
                 // Si no existe una relación con el userId proporcionado, verificamos si el userId proporcionado existe
-                const user = await User.findByPk(userId);
+                const user = await Client.findByPk(userId);
 
                 if (!user) {
                     return res.status(404).json({ error: 'El usuario especificado no existe' });
                 }
 
                 // Establecer la relación entre el Botuser existente y el nuevo User
-                await existingBotuser.addUser(user);
+                await existingBotuser.addClient(user);
             }
 
             return res.status(200).json(existingBotuser);
@@ -71,14 +71,14 @@ router.post('/', async (req, res) => {
             });
 
             // Verificamos si el userId proporcionado existe y establecemos la relación
-            const user = await User.findByPk(userId);
+            const user = await Client.findByPk(userId);
 
             if (!user) {
                 return res.status(404).json({ error: 'El usuario especificado no existe' });
             }
 
             // Establecer la relación entre el nuevo Botuser y el User existente
-            await newUser.addUser(user);
+            await newUser.addClient(user);
 
             return res.status(201).json(newUser);
         }
