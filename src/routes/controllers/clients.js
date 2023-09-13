@@ -4,7 +4,7 @@ const { Client } = require('../../db.js')
 const router = Router();
 
 // Obtener todos los clientes o filtrar por ID si se proporciona en la query
-router.get('/clients', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       console.log("entre aca")
       const { id } = req.query;
@@ -32,7 +32,7 @@ router.get('/clients', async (req, res) => {
   
   
 
-  router.post('/clients', async (req, res) => {
+  router.post('/', async (req, res) => {
     try {
       const { email, info, vip, vipmail, testing } = req.body;
   
