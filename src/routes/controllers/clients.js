@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Client } = require('../../db.js')
+const { Client,Botuser } = require('../../db.js')
 
 const router = Router();
 
