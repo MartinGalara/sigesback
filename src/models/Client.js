@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
             allowNull: false
           },
         email: {
-            type: DataTypes.ARRAY(DataTypes.STRING), // Usar ARRAY para permitir varios correos
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false
         },
         info: {
