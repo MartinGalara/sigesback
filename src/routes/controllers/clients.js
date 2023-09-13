@@ -6,7 +6,6 @@ const router = Router();
 // Obtener todos los clientes o filtrar por ID si se proporciona en la query
 router.get('/', async (req, res) => {
     try {
-      console.log("entre aca")
       const { id } = req.query;
       let clients;
   
@@ -34,10 +33,11 @@ router.get('/', async (req, res) => {
 
   router.post('/', async (req, res) => {
     try {
-      const { email, info, vip, vipmail, testing } = req.body;
+      const { id,email, info, vip, vipmail, testing } = req.body;
   
       // Crear un nuevo cliente
       const newClient = await Client.create({
+        id,
         email,
         info,
         vip,
