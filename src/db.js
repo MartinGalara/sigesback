@@ -60,6 +60,7 @@ const { Staff } = sequelize.models;
 const { Webuser } = sequelize.models;
 const { Vipuser } = sequelize.models;
 const { Botuser } = sequelize.models;
+const { Client } = sequelize.models;
 
 // Aca vendrian las relaciones
 Ticket.belongsTo(User);
@@ -79,6 +80,9 @@ Vipuser.belongsTo(User)
 
 User.belongsToMany(Botuser, { through: 'User_Botuser' });
 Botuser.belongsToMany(User, { through: 'User_Botuser' });
+
+Client.belongsToMany(Botuser, { through: 'Client_Botuser' });
+Botuser.belongsToMany(Client, { through: 'Client_Botuser' });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

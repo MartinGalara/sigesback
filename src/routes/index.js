@@ -14,6 +14,7 @@ const recommendations = require("./controllers/recommendations.js")
 const cloudinary = require("./controllers/cloudinary.js")
 const vipusers = require("./controllers/vipusers.js")
 const botusers = require("./controllers/botusers.js")
+const clients = require("./controllers/clients.js")
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -33,5 +34,6 @@ router.use('/recommendations', recommendations)
 router.use('/cloudinary', cloudinary)
 router.use('/vipusers', vipusers)
 router.use('/botusers', botusers)
+router.use('/clients', clients)
 
 module.exports = router;
