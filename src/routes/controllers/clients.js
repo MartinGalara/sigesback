@@ -6,6 +6,7 @@ const router = Router();
 // Obtener todos los clientes o filtrar por ID si se proporciona en la query
 router.get('/clients', async (req, res) => {
     try {
+      console.log("entre aca")
       const { id } = req.query;
       let clients;
   
