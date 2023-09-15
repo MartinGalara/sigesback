@@ -25,14 +25,14 @@ router.get('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
 
-    const {userId,zone} = req.query;
+    const {clientId,zone} = req.query;
 
     try {
 
-        if(userId && zone){
+        if(clientId && zone){
             const computers = await Pc.findAll({
                 where:{
-                    userId: userId,
+                    clientId: clientId,
                     zone: zone
                 }
             })
@@ -56,14 +56,14 @@ router.get('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
 
     const {id} = req.params;
-    const {alias, teamviewer_id, userId, zone, order} = req.body
+    const {alias, teamviewer_id, clientId, zone, order} = req.body
 
     try {
         const computerToUpdate = await Pc.findByPk(id)
         await computerToUpdate.update({
             alias,
             teamviewer_id,
-            userId,
+            clientId,
             zone,
             order
         })
