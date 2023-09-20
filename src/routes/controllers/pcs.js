@@ -103,6 +103,35 @@ router.post('/', async (req, res) => {
 
     try {
 
+        const pc = await Pc.findAll({
+            where: {
+                teamviewer_id
+            }
+        })
+    
+        if(pc.length){
+
+            const pcToUpdate = await Pc.findOne({
+                where:{teamviewer_id}
+            })
+
+            await pcToUpdate.update({
+            alias,
+            teamviewer_id,
+            razonSocial,
+            bandera,
+            identificador,
+            ciudad,
+            area,
+            prefijo,
+            extras,
+            clientId
+            })
+
+            return res.status(201).json(pcToUpdate);
+
+        }
+
         // Crea una nueva computadora en la base de datos
         const newComputer = await Pc.create({
             alias,

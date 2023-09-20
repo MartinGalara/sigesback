@@ -35,11 +35,9 @@ router.get('/', async (req, res) => {
     try {
       const { id,email, info, vip, vipmail, testing } = req.body;
 
-      const client = await await Client.findAll({
+      const client = await Client.findAll({
         where: { id }
       });
-
-      console.log("asd",client)
       
       if(client.length) return res.status(201).send("Cliente ya existente")
   
