@@ -34,6 +34,10 @@ router.get('/', async (req, res) => {
   router.post('/', async (req, res) => {
     try {
       const { id,email, info, vip, vipmail, testing } = req.body;
+
+      const client = await Client.findByPk(id)
+      
+      if(client) return res.status(201).send("Cliente ya existente")
   
       // Crear un nuevo cliente
       const newClient = await Client.create({
