@@ -86,4 +86,42 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// Ruta para crear una nueva computadora
+router.post('/', async (req, res) => {
+    const {
+        alias,
+        teamviewer_id,
+        razonSocial,
+        bandera,
+        identificador,
+        ciudad,
+        area,
+        prefijo,
+        extras,
+        clientId
+    } = req.body;
+
+    try {
+
+        // Crea una nueva computadora en la base de datos
+        const newComputer = await Pc.create({
+            alias,
+            teamviewer_id,
+            razonSocial,
+            bandera,
+            identificador,
+            ciudad,
+            area,
+            prefijo,
+            extras,
+            clientId
+        });
+
+        return res.status(201).json(newComputer);
+    } catch (error) {
+        console.log(error.message);
+        return res.status(400).send(error.message);
+    }
+});
+
 module.exports = router;
