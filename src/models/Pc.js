@@ -24,10 +24,10 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
         },
         prefijo:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         },
         extras:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         },
     },
         {
