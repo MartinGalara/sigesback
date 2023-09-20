@@ -40,6 +40,8 @@ router.post('/', async (req, res) => {
         });
 
         if (existingBotuser) {
+
+            await existingBotuser.update({name, phone, email, createUser, canSOS, adminPdf, manager, area, createdBy})
             // Si existe un Botuser con el mismo número de teléfono, verificamos la relación con el clientId
             const existingRelation = await existingBotuser.hasClient(clientId);
 
@@ -57,6 +59,13 @@ router.post('/', async (req, res) => {
 
             return res.status(200).json(existingBotuser);
         } else {
+
+            // Verificamos si el clientId proporcionado existe y establecemos la relación
+            const user = await Client.findByPk(clientId);
+
+            if (!user) {
+                return res.status(404).json({ error: 'El usuario especificado no existe' });
+            }
             // Si no existe un Botuser con el mismo número de teléfono, creamos uno nuevo
             const newUser = await Botuser.create({
                 name,
@@ -69,13 +78,6 @@ router.post('/', async (req, res) => {
                 area,
                 createdBy
             });
-
-            // Verificamos si el clientId proporcionado existe y establecemos la relación
-            const user = await Client.findByPk(clientId);
-
-            if (!user) {
-                return res.status(404).json({ error: 'El usuario especificado no existe' });
-            }
 
             // Establecer la relación entre el nuevo Botuser y el User existente
             await newUser.addClient(user);
