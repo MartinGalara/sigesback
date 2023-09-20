@@ -8,12 +8,27 @@ module.exports = (sequelize) => {
         teamviewer_id: {
             type: DataTypes.STRING,
         },
-        zone: {
+        razonSocial:{
             type: DataTypes.STRING,
         },
-        order:{
+        bandera:{
+            type: DataTypes.STRING,
+        },
+        identificador:{
+            type: DataTypes.STRING,
+        },
+        ciudad:{
+            type: DataTypes.STRING,
+        },
+        area: {
+            type: DataTypes.STRING,
+        },
+        prefijo:{
             type: DataTypes.INTEGER,
-        }
+        },
+        extras:{
+            type: DataTypes.INTEGER,
+        },
     },
         {
             timestamps: false,

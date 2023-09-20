@@ -1,78 +1,89 @@
 const { Router } = require('express');
-const { Pc,Client } = require('../../db.js')
+const { Pc, Client } = require('../../db.js');
 
 const router = Router();
 
+// Ruta para obtener una computadora por ID
 router.get('/:id', async (req, res) => {
-
-    const {id} = req.params;
+    const { id } = req.params;
 
     try {
-        if(id){
-            const computer = await Pc.findByPk(id)
-            return res.status(200).json(computer)
-        }
-        else{
-            return res.status(400).send("Missing id")
+        if (id) {
+            const computer = await Pc.findByPk(id);
+            return res.status(200).json(computer);
+        } else {
+            return res.status(400).send("Missing id");
         }
     } catch (error) {
-        console.log(error.message)
-        return res.status(400).send(error.message)
+        console.log(error.message);
+        return res.status(400).send(error.message);
     }
+});
 
-})
-
-
+// Ruta para obtener todas las computadoras o filtrar por clientId y zona
 router.get('/', async (req, res) => {
-
-    const {clientId,zone} = req.query;
+    const { clientId, area } = req.query;
 
     try {
-
-        if(clientId && zone){
+        if (clientId && area) {
             const computers = await Pc.findAll({
-                where:{
+                where: {
                     clientId: clientId,
-                    zone: zone
+                    area: area
                 }
-            })
+            });
 
-            return res.status(200).json(computers)
+            return res.status(200).json(computers);
         }
 
         const allComputers = await Pc.findAll({
-            include:{
+            include: {
                 model: Client
             }
-        })
+        });
 
-        return res.status(200).json(allComputers)
+        return res.status(200).json(allComputers);
     } catch (error) {
-        console.log(error.message)
-         return res.status(400).send(error.message)
+        console.log(error.message);
+        return res.status(400).send(error.message);
     }
-})
+});
 
+// Ruta para actualizar una computadora por ID
 router.put('/:id', async (req, res) => {
-
-    const {id} = req.params;
-    const {alias, teamviewer_id, clientId, zone, order} = req.body
+    const { id } = req.params;
+    const {
+        alias,
+        teamviewer_id,
+        razonSocial,
+        bandera,
+        identificador,
+        ciudad,
+        area,
+        prefijo,
+        extras,
+        clientId
+    } = req.body;
 
     try {
-        const computerToUpdate = await Pc.findByPk(id)
+        const computerToUpdate = await Pc.findByPk(id);
         await computerToUpdate.update({
             alias,
             teamviewer_id,
-            clientId,
-            zone,
-            order
-        })
-        return res.status(200).send("Listo")
+            razonSocial,
+            bandera,
+            identificador,
+            ciudad,
+            area,
+            prefijo,
+            extras,
+            clientId
+        });
+        return res.status(200).send("Listo");
     } catch (error) {
-        console.log(error.message)
-        return res.status(400).send(error.message)
+        console.log(error.message);
+        return res.status(400).send(error.message);
     }
-
-})
+});
 
 module.exports = router;
