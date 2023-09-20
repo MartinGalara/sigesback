@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
         where: { id }
       });
 
-      console.log(client)
+      console.log("asd",client)
       
       if(client.length) return res.status(201).send("Cliente ya existente")
   
