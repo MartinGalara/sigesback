@@ -10,12 +10,9 @@ module.exports = (sequelize) => {
           },
         email: {
             type: DataTypes.ARRAY(DataTypes.STRING),
-            allowNull: false
         },
         info: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
         },
         vip: {
             type: DataTypes.STRING,
