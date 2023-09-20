@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         // Obtener los datos del cuerpo de la solicitud
-        const { name, phone, email, createUser, canSOS, adminPdf, manager, area, userId, createdBy } = req.body;
+        const { name, phone, email, createUser, canSOS, adminPdf, manager, area, clientId, createdBy } = req.body;
 
         // Verificar si existe un Botuser con el mismo número de teléfono
         const existingBotuser = await Botuser.findOne({
@@ -40,12 +40,12 @@ router.post('/', async (req, res) => {
         });
 
         if (existingBotuser) {
-            // Si existe un Botuser con el mismo número de teléfono, verificamos la relación con el userId
-            const existingRelation = await existingBotuser.hasClient(userId);
+            // Si existe un Botuser con el mismo número de teléfono, verificamos la relación con el clientId
+            const existingRelation = await existingBotuser.hasClient(clientId);
 
             if (!existingRelation) {
-                // Si no existe una relación con el userId proporcionado, verificamos si el userId proporcionado existe
-                const user = await Client.findByPk(userId);
+                // Si no existe una relación con el clientId proporcionado, verificamos si el clientId proporcionado existe
+                const user = await Client.findByPk(clientId);
 
                 if (!user) {
                     return res.status(404).json({ error: 'El usuario especificado no existe' });
@@ -70,8 +70,8 @@ router.post('/', async (req, res) => {
                 createdBy
             });
 
-            // Verificamos si el userId proporcionado existe y establecemos la relación
-            const user = await Client.findByPk(userId);
+            // Verificamos si el clientId proporcionado existe y establecemos la relación
+            const user = await Client.findByPk(clientId);
 
             if (!user) {
                 return res.status(404).json({ error: 'El usuario especificado no existe' });
