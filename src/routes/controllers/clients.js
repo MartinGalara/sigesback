@@ -36,6 +36,8 @@ router.get('/', async (req, res) => {
       const { id,email, info, vip, vipmail, testing } = req.body;
 
       const client = await Client.findByPk(id)
+
+      console.log(client)
       
       if(client) return res.status(201).send("Cliente ya existente")
   
