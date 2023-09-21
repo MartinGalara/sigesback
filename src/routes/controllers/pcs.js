@@ -117,7 +117,6 @@ router.put('/', async (req, res) => {
                 console.log("entre al true")
 
                 await computerToUpdate.update({
-                    alias,
                     teamviewer_id,
                     razonSocial,
                     bandera,
