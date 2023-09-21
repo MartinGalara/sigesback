@@ -86,6 +86,79 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+router.put('/', async (req, res) => {
+
+    console.log("entre al put")
+    const { from } = req.query;
+
+    if(from === "tv"){
+
+        const {
+            teamviewer_id,
+            razonSocial,
+            bandera,
+            identificador,
+            ciudad,
+            area,
+            prefijo,
+            extras,
+            clientId
+        } = req.body;
+    
+        try {
+            const computerToUpdate = await Pc.findAll({
+                where:{
+                    teamviewer_id
+                }
+            });
+
+            if(computerToUpdate.length){
+
+                console.log("entre al true")
+
+                await computerToUpdate.update({
+                    alias,
+                    teamviewer_id,
+                    razonSocial,
+                    bandera,
+                    identificador,
+                    ciudad,
+                    area,
+                    prefijo,
+                    extras,
+                    clientId
+                });
+                return res.status(200).send("Listo");
+
+            }else{
+
+
+                console.log("entre al false")
+                const computerCreate = await Pc.create({
+                    teamviewer_id,
+                    razonSocial,
+                    bandera,
+                    identificador,
+                    ciudad,
+                    area,
+                    prefijo,
+                    extras,
+                    clientId
+                });
+
+                return res.status(200).json(computerCreate);
+                
+            }
+            
+        } catch (error) {
+            console.log(error.message);
+            return res.status(400).send(error.message);
+        }
+
+    }
+    
+});
+
 // Ruta para crear una nueva computadora
 router.post('/', async (req, res) => {
     const {
