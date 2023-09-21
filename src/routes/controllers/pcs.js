@@ -87,11 +87,12 @@ router.put('/:id', async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-    console.log("entre al put");
+
     const { from } = req.query;
 
     if (from === "tv") {
         const {
+            alias,
             teamviewer_id,
             razonSocial,
             bandera,
@@ -111,7 +112,6 @@ router.put('/', async (req, res) => {
             });
 
             if (computersToUpdate.length) {
-                console.log("entre al true");
 
                 // Actualiza cada computadora en el bucle forEach
                 computersToUpdate.forEach(async (computer) => {
@@ -130,8 +130,9 @@ router.put('/', async (req, res) => {
 
                 return res.status(200).send("Listo");
             } else {
-                console.log("entre al false");
+    
                 const computerCreate = await Pc.create({
+                    alias,
                     teamviewer_id,
                     razonSocial,
                     bandera,
