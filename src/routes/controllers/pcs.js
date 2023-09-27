@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { Pc, Client } = require('../../db.js');
+const { Op } = require('sequelize');
 
 const router = Router();
 
@@ -26,12 +27,24 @@ router.get('/', async (req, res) => {
 
     try {
         if (clientId && area) {
-            const computers = await Pc.findAll({
-                where: {
-                    clientId: clientId,
-                    area: area
-                }
-            });
+            let computers;
+            if (area === "P") {
+                computers = await Pc.findAll({
+                    where: {
+                        clientId: clientId,
+                        area: {
+                            [Op.in]: ["P", "N", "L", "B", "R"]
+                        }
+                    }
+                });
+            } else {
+                computers = await Pc.findAll({
+                    where: {
+                        clientId: clientId,
+                        area: area
+                    }
+                });
+            }
 
             return res.status(200).json(computers);
         }
