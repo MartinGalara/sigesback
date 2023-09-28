@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { id, emails, info, vip, vipmail, testing } = req.body;
+    const { id, email, info, vip, vipmail, testing } = req.body;
 
     const client = await Client.findAll({
       where: { id }
@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
     if (client.length) return res.status(201).send("Cliente ya existente");
 
     // Convertir el array de correos electrónicos a una cadena separada por comas
-    const emailString = emails.join(',');
+    const emailString = email.join(',');
 
     // Crear un nuevo cliente con la cadena de correos electrónicos
     const newClient = await Client.create({
@@ -69,7 +69,7 @@ router.put('/', async (req, res) => {
   try {
     const {
       id,
-      emails, // Cambiar el nombre del campo a "emails" para recibir un array
+      email,
       info,
       vip,
       vipmail,
@@ -86,7 +86,7 @@ router.put('/', async (req, res) => {
     }
 
     // Convertir el array de correos electrónicos a una cadena separada por comas
-    const emailString = emails.join(',');
+    const emailString = email.join(',');
 
     // Actualiza el campo de correo electrónico con la cadena
     client.email = emailString;
