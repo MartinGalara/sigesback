@@ -61,8 +61,9 @@ router.get('/', async (req, res) => {
 // Actualizar un cliente por ID
 router.put('/', async (req, res) => {
   try {
-    const { id } = req.query; // Obtén el ID del cliente de los parámetros de consulta
+
     const {
+      id,
       email,
       info,
       vip,
@@ -80,6 +81,7 @@ router.put('/', async (req, res) => {
     }
 
     // Actualiza los campos del cliente con los valores proporcionados en el cuerpo de la solicitud
+    client.id = id;
     client.email = email;
     client.info = info;
     client.vip = vip;
