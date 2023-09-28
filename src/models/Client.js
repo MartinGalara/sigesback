@@ -9,7 +9,8 @@ module.exports = (sequelize) => {
             allowNull: false
           },
         email: {
-            type: DataTypes.ARRAY(DataTypes.STRING),
+            type: DataTypes.STRING,
+            defaultValue:""
         },
         info: {
             type: DataTypes.STRING,
