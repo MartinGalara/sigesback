@@ -57,6 +57,44 @@ router.get('/', async (req, res) => {
       res.status(500).json({ message: 'Error interno del servidor.' });
     }
   });
+
+// Actualizar un cliente por ID
+router.put('/', async (req, res) => {
+  try {
+    const { id } = req.query; // Obtén el ID del cliente de los parámetros de consulta
+    const {
+      email,
+      info,
+      vip,
+      vipmail,
+      testing,
+    } = req.body;
+
+    // Busca el cliente por ID
+    const client = await Client.findOne({
+      where: { id },
+    });
+
+    if (!client) {
+      return res.status(404).json({ message: 'Cliente no encontrado.' });
+    }
+
+    // Actualiza los campos del cliente con los valores proporcionados en el cuerpo de la solicitud
+    client.email = email;
+    client.info = info;
+    client.vip = vip;
+    client.vipmail = vipmail;
+    client.testing = testing;
+
+    // Guarda los cambios en la base de datos
+    await client.save();
+
+    return res.status(200).json(client);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor.' });
+  }
+});
   
 
 module.exports = router;
