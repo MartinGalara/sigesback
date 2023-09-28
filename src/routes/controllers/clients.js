@@ -62,6 +62,8 @@ router.get('/', async (req, res) => {
 router.put('/', async (req, res) => {
   try {
 
+    const { oldId } = req.query
+
     const {
       id,
       email,
@@ -73,7 +75,7 @@ router.put('/', async (req, res) => {
 
     // Busca el cliente por ID
     const client = await Client.findOne({
-      where: { id },
+      where: { id: oldId },
     });
 
     if (!client) {
