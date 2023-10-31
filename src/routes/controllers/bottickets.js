@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { BotTicket } = require('../../db.js')
+const { Botticket } = require('../../db.js')
 
 const router = Router();
 
@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
    
     if(id){
         try {
-            const ticket = await BotTicket.findByPk(id)
+            const ticket = await Botticket.findByPk(id)
             return res.status(200).json(ticket)
         } catch (error) {
             return res.status(404).json({message: "Ticket not found"})
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 
    if(clientId){
     try {
-        const userTickets = await BotTicket.findAll({
+        const userTickets = await Botticket.findAll({
             where:{
                 clientId: clientId
             }
@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
    }
 
    try {
-    const allTickets = await BotTicket.findAll()
+    const allTickets = await Botticket.findAll()
     return res.status(200).json(allTickets)
    } catch (error) {
     return res.status(400).send(error.message)
@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
     const {clientId} = req.body;
 
     try {
-        const newTicket = await BotTicket.create({clientId})
+        const newTicket = await Botticket.create({clientId})
         return res.status(200).json(newTicket)
     } catch (error) {
         return res.status(400).send(error.message)
