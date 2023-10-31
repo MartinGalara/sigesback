@@ -62,10 +62,14 @@ const { Vipuser } = sequelize.models;
 const { Botuser } = sequelize.models;
 const { Client } = sequelize.models;
 const { Pc } = sequelize.models;
+const { BotTicket } = sequelize.models;
 
 // Aca vendrian las relaciones
 Ticket.belongsTo(User);
 User.hasMany(Ticket);
+
+BotTicket.belongsTo(Client);
+Client.hasMany(BotTicket);
 
 User.hasMany(Computer);
 Computer.belongsTo(User);
