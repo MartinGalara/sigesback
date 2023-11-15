@@ -37,7 +37,19 @@ router.get('/', async (req, res) => {
                         }
                     }
                 });
-            } else {
+            } 
+            else if (area === "A")
+            {
+                computers = await Pc.findAll({
+                    where: {
+                        clientId: clientId,
+                        area: {
+                            [Op.in]: ["A", "S", "V"]
+                        }
+                    }
+                });
+            } 
+            else {
                 computers = await Pc.findAll({
                     where: {
                         clientId: clientId,
