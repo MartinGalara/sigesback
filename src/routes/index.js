@@ -16,6 +16,7 @@ const vipusers = require("./controllers/vipusers.js")
 const botusers = require("./controllers/botusers.js")
 const clients = require("./controllers/clients.js")
 const pcs = require("./controllers/pcs.js")
+const bottickets = require("./controllers/bottickets.js")
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -37,5 +38,6 @@ router.use('/vipusers', vipusers)
 router.use('/botusers', botusers)
 router.use('/clients', clients)
 router.use('/pcs', pcs)
+router.use('/bottickets', bottickets)
 
 module.exports = router;
