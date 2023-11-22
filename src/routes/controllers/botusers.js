@@ -32,8 +32,6 @@ router.post('/', async (req, res) => {
         // Obtener los datos del cuerpo de la solicitud
         const { name, phone, email, createUser, canSOS, adminPdf, manager, area, clientId, createdBy } = req.body;
 
-        console.log(req.body)
-
         // Verificar si existe un Botuser con el mismo número de teléfono
         const existingBotuser = await Botuser.findOne({
             where: {
