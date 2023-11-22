@@ -32,6 +32,8 @@ router.post('/', async (req, res) => {
         // Obtener los datos del cuerpo de la solicitud
         const { name, phone, email, createUser, canSOS, adminPdf, manager, area, clientId, createdBy } = req.body;
 
+        console.log(req.body)
+
         // Verificar si existe un Botuser con el mismo número de teléfono
         const existingBotuser = await Botuser.findOne({
             where: {
@@ -60,8 +62,11 @@ router.post('/', async (req, res) => {
             return res.status(200).json(existingBotuser);
         } else {
 
+
             // Verificamos si el clientId proporcionado existe y establecemos la relación
             const user = await Client.findByPk(clientId);
+
+            console.log(user)
 
             if (!user) {
                 return res.status(404).json({ error: 'El usuario especificado no existe' });
