@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/bottickets", async (req, res) => {
+router.get("/bottickets", async (req, res) => {
   try {
     const bottickets = await Botticket.findAll();
 
@@ -26,7 +26,7 @@ router.post("/bottickets", async (req, res) => {
   }
 });
 
-router.post("/botusers", async (req, res) => {
+router.get("/botusers", async (req, res) => {
   try {
     const botusers = await Botuser.findAll();
 
@@ -36,7 +36,7 @@ router.post("/botusers", async (req, res) => {
   }
 });
 
-router.post("/clients", async (req, res) => {
+router.get("/clients", async (req, res) => {
   try {
     const clients = await Client.findAll();
 
@@ -46,13 +46,30 @@ router.post("/clients", async (req, res) => {
   }
 });
 
-router.post("/pcs", async (req, res) => {
+router.get("/pcs", async (req, res) => {
   try {
     const pcs = await Pc.findAll();
 
     return res.status(200).json(pcs);
   } catch (error) {
     return res.status(400).send(error.message);
+  }
+});
+
+router.get("/client-botusers", async (req, res) => {
+  try {
+    // Encuentra todos los clientes con sus botusers asociados
+    const clients = await Client.findAll({
+      include: {
+        model: Botuser,
+        through: { attributes: [] }, // Esto asegura que no se devuelvan los atributos de la tabla intermedia
+      },
+    });
+
+    return res.status(200).json(clients);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error interno del servidor." });
   }
 });
 
