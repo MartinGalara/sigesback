@@ -2,9 +2,9 @@
     "service": "gmail",
     "auth": {
       "type": "OAuth2",
-      "user": "soporte@sistemasiges.com.ar",
-      "clientId": "77375302671-hl2alrs2qhvq883q3j7vgtelm9685ujo.apps.googleusercontent.com",
-      "clientSecret": "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",
-      "refreshToken": "1//04R-8fkN6244jCgYIARAAGAQSNwF-L9IrRx_7EZ0_scVRCFGw1SP2pjtu5wKKa7pAkga5-G2IIasWmdU_vH3ll5MWWjgzGyXIslI"
+      "user": "YOUR_EMAIL@gmail.com",
+      "clientId": "YOUR_CLIENT_ID",
+      "clientSecret": "YOUR_CLIENT_SECRET",
+      "refreshToken": "YOUR_REFRESH_TOKEN"
     }
   }
