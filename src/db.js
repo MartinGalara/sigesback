@@ -60,8 +60,16 @@ const { Botticket } = sequelize.models;
 Botticket.belongsTo(Client);
 Client.hasMany(Botticket);
 
-Client.belongsToMany(Botuser, { through: "Client_Botuser" });
-Botuser.belongsToMany(Client, { through: "Client_Botuser" });
+Client.belongsToMany(Botuser, { 
+  through: "Client_Botuser",
+  foreignKey: "clientId",
+  otherKey: "botuserId"
+});
+Botuser.belongsToMany(Client, { 
+  through: "Client_Botuser",
+  foreignKey: "botuserId",
+  otherKey: "clientId"
+});
 
 Client.hasMany(Pc);
 Pc.belongsTo(Client);
